@@ -9,6 +9,19 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+
+    use HasFactory, Notifiable;
+    use Search; // Use the search trait we created earlier
+        
+    /* --- existing code here --- */
+
+    protected $searchable = [
+        'name',
+        'email',
+        'bio',
+        
+    ];
+
     use HasFactory, Notifiable;
 
     /**
@@ -47,7 +60,7 @@ class User extends Authenticatable
 
     public function bussiness()
     {
-        return $this->hasMany('App\Models\bussinesses');
+        return $this->hasone('App\Models\bussinesses');
     }
 
 

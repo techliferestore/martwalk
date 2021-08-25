@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Livewire;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic;
+
 use Illuminate\Support\Str;   
 use Livewire\Component;
 use App\Models\User;
-
+use Livewire\WithFileUploads;
 
 class DashboardProfile extends Component
 {
@@ -17,37 +16,38 @@ class DashboardProfile extends Component
     public $bussiness = false;
     public $booking = false;
     public $review = false;
-   
+   public $profile_id;
     
+   use WithFileUploads;
 
-    public $images;
+ 
+  
     public $image;
  
-    protected $listeners = [
-     'fileUpload'     => 'handleFileUpload'
-    
- ];
-    public function update($id)
+    public function mount($profile_id)
+    {
+        $this->profile_id=$profile_id;
+
+    }
+
+    public function updateProfile()
  
     {
-      //dd($id);
+        //dd( $this->profile_id);
         $validatedDate = $this->validate([
  
-            'name' => 'required',
+            'name' => 'required','image'=>'required',
  'email' =>'required' ,'contactno' => 'required'
         
         ]);
  
-        $image          = $this->storeImage($id);
-        //dd($image);
- 
-        $post = User::find($id);
- 
-        $post->update([
+     
+        $post = User::find($this->profile_id);
+         $post->update([
  
             'name' => $this->name,
             'email'=>$this->email,
-            'profile_image'=> $image,
+            'profile_image'=> $this->image->store($this->profile_id.'profile_image','public'),
             'contactno'=>$this->contactno,
  
           
@@ -65,35 +65,9 @@ class DashboardProfile extends Component
  
      }
  
-     public function handleFileUpload($imageData)
-     {
-         $this->image = $imageData;
-     }
+   
  
-    public function storeImage($id)
-     {
-         
-         
- if($this->image){
-     $post = User::find($id);
-     //$pos=$post->profile_image;
-    // dd($pos);
-    
-     Storage::delete('public/profile_image/'.$post->profile_image);
- 
-     
- }
   
- 
-         $img   = ImageManagerStatic::make($this->image)->encode('jpg');
-         $name  = Str::random().'_'.$this->contactno. '.jpg';
- 
-         Storage::disk('public')->put('profile_image'.'/'.$name, $img, 'public');
-         
-         return $name;
- 
-     }
-
 
 
 public function edit_profile($id)

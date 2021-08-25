@@ -18,14 +18,14 @@
         <label>Opening Timing </label>
 
         <input type="text" wire:model="open" placeholder="opening time" />
-        @error('yt')<span class="error">{{$message}}</span>@enderror
+        @error('open')<span class="error">{{$message}}</span>@enderror
         </div></td>
 
         <td> <div class="col-md-6">
         <label>Closing Timing </label>
 
         <input type="text" wire:model="close"  placeholder="closing time" />
-        @error('yt')<span class="error">{{$message}}</span>@enderror
+        @error('close')<span class="error">{{$message}}</span>@enderror
         </div></td>
         </tr>
         
@@ -156,7 +156,7 @@
 
 <div class="col-md-6">
 
-<button class="btn  color2-bg  float-btn "  wire:click.prevent="time_create()" name="list3" >Next<i class="fal fa-paper-plane"></i></button></div>
+<button class="btn  color2-bg  float-btn "  wire:click.prevent="time_create({{Auth::user()->id}})" name="list3" >Next<i class="fal fa-paper-plane"></i></button></div>
 </div>
 </div>
 </form>

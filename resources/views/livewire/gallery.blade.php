@@ -27,12 +27,22 @@
 
 
                         <input type="file" wire:model="img1"  name="img1" class="upload">
+                        <div class="col-md-6">
 
+                            <img src="{{asset('/')}}storage/{{Auth::user()->bussiness->img_1}}" style="max-height: 200px; max-width: 100px;" alt="">
+                            
+                                    
+                            </div>
 
 
                         <input type="file" wire:model="img2"  name="img2" class="upload">
 
+                        <div class="col-md-6">
 
+                            <img src="{{asset('/')}}storage/{{Auth::user()->bussiness->img_2}}" style="max-height: 200px; max-width: 100px;" alt="">
+                            
+                                    
+                            </div>
 
                 </div>
 
@@ -58,7 +68,12 @@
 
                     <input type="file" wire:model="img3"  name="img3" class="upload">
 
+                    <div class="col-md-6">
 
+                        <img src="{{asset('/')}}storage/{{Auth::user()->bussiness->img_3}}" style="max-height: 200px; max-width: 100px;" alt="">
+                        
+                                
+                        </div>
 
                 </div>
 
@@ -66,7 +81,12 @@
 
                     <input type="file" wire:model="img4"  name="img4" class="upload">
 
+                    <div class="col-md-6">
 
+                        <img src="{{asset('/')}}storage/{{Auth::user()->bussiness->img_4}}" style="max-height: 200px; max-width: 100px;" alt="">
+                        
+                                
+                        </div>
 
             </div>
 

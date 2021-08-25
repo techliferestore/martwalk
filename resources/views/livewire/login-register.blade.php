@@ -51,13 +51,16 @@
        
         <div class="tab">
                                     <div class="container">
-                                        <h3>Sign Up <span>Easy<strong>Book</strong></span></h3>
+                                        <h3>Sign Up <span>Mart<strong>Walk</strong></span></h3>
                                         <div class="custom-form">
                                         <form method="POST" >
                                           
                                                 <label >Full Name <span>*</span> </label>
                                                 <input  type="text"  name="name" wire:model="name">
                                                 @error('name') <span class="text-danger error">{{ $message }}</span>@enderror
+                                                <label >Mobile No. <span>*</span> </label>
+                                                <input  type="text"  name="name" wire:model="contactno">
+                                                @error('contactno') <span class="text-danger error">{{ $message }}</span>@enderror
 
                                                 <label>Email Address <span>*</span></label>
                                                 <input  type="text"   name="email"  wire:model="email" >
@@ -68,7 +71,10 @@
                                                 @error('password') <span class="text-danger error">{{ $message }}</span>@enderror
               
                                             
-
+                                                <div class="">
+                                                <input type="checkbox" wire:model="agree"  name="wifi" value="1">
+                                                <label for="check-a">Term & Condition</label>
+                                            </div>
                               
                                                 <button   wire:click.prevent="registerStore" class="log-submit-btn color-bg"  ><span>Register</span></button>
                                             </form>
@@ -85,7 +91,7 @@
     <div class="tab">
                                 <!--tab -->
                                 <div  class="container">
-                                    <h3>Sign In <span>Easy<strong>Book</strong></span></h3>
+                                    <h3>Sign In <span>Mart<strong>Walk</strong></span></h3>
                                     <div class="custom-form">
                                         <form  >
                                             <label>Username or Email Address <span>*</span> </label>
@@ -98,7 +104,7 @@
                                             <button type="submit" wire:click.prevent="login" class="log-submit-btn color-bg"><span>Log In</span></button>
                                             <div class="clearfix"></div>
                                             <div class="filter-tags">
-                                                <input  type="checkbox" name="check">
+                                            <input type="checkbox" wire:model="agree"  name="wifi" value="1">
                                                 <label for="check-a">Remember me</label>
                                             </div>
                                         </form>

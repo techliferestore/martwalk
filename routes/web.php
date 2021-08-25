@@ -15,14 +15,19 @@ use App\Http\Controllers\frontController;
 */
 
 Route::get('/', [frontController::class,'home'])->name('home');
-Route::get('/listing', [frontController::class,'listing'])->name('listing');
-Route::get('/sub', [frontController::class,'sub'])->name('sub');
-Route::get('/detail/{id}', [frontController::class,'detail'])->name('detail');
+Route::group(['prefix' => 'myprofile'], function () {
+    Route::get('/dashboard', [dashboard::class,'dashboard'])->name('dashboard');
+    Route::get('/bussiness', [dashboard::class,'bussiness'])->name('add-bussiness');
+   
+});
 
 
 
-//Route::get('/dashboard', [dashboard::class,'dashboard'])->name('dashboard');
-Route::get('/bussiness', [dashboard::class,'bussiness'])->name('add-bussiness');
-Route::get('/dashboard',App\Http\Livewire\DashboardProfile::class,'edit_profile')->name('dashboard');
+Route::get('/alllisting', [frontController::class,'alllisting'])->name('alllisting');
+Route::get('search', [frontController::class,'search']);
+Route::get('sub_listing', [frontController::class,'sub_listing']);
+Route::get('/{slug}/{city}/{id}', [frontController::class,'detail'])->name('detail');
+Route::get('{city}/{keywords}', [frontController::class,'listing'])->name('listing');
+Route::get('{slug}', [frontController::class,'sub'])->name('subcategory');
 
-Route::get('/login', App\Http\Livewire\LoginRegister::class)->name('login');
+//Route::get('/login', App\Http\Livewire\LoginRegister::class)->name('login');

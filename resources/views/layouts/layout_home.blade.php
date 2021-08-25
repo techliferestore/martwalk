@@ -3,11 +3,12 @@
    <head>
       <!--=============== basic  ===============-->
       <meta charset="UTF-8">
-      <title>Mart Walk India's local search engine, Booking Portal , Hotels & More.</title>
+      
+      <title>@yield('title')</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
       <meta name="keywords" content="Mart walk, Martwalk, local Engine search, travel, order food, grocery, medicines, online shopping, book tickets, movies, bus, flights, hotels, events, search plus services,
       local businesses, online yellow pages, Indian search engine, Mart Walk customer care, customer support" />
-      <meta name="description" content="Mart Walk India's local search engine, Ticket Booking, Flights, Hotels, Movies, and Cabs. You can also Order Food, Book Restaurant,Doctors’ Appointment More." />
+      <meta name="description" content="@yield('description')" />
      
     
 
@@ -72,10 +73,10 @@
                
                 @auth
                       
-                      <a href="{{route('dashboard')}}" class="add-hotel">Add Your Property <span><i class="far fa-plus"></i></span></a>                    
+                      <a href="{{route('dashboard')}}" class="add-hotel">Add Your Bussiness <span><i class="far fa-plus"></i></span></a>                    
                       @endauth
                       @guest
-                      <a  class="show-reg-form modal-open">Add Your Property <span><i class="far fa-plus"></i></span></a>
+                      <a  class="show-reg-form modal-open">Add Your Bussiness <span><i class="far fa-plus"></i></span></a>
       @endguest                
       @auth
         <livewire:logout />                       
@@ -96,20 +97,20 @@
             @auth
                         <div class="header-user-menu">
                             <div class="header-user-name">
-                                <span><img src="{{url('/storage/profile_image/'.Auth::user()->profile_image)}}" alt=""></span>
+                                <span> <img src="{{asset('/')}}storage/{{Auth::user()->profile_image}}"  alt=""></span>
                                 My account
                             </div>
                             <ul>
-                                <li><a href="dashboard-myprofile.html"> Edit profile</a></li>
-                                <li><a href="dashboard-add-listing.html"> Add Listing</a></li>
-                                <li><a href="dashboard-bookings.html">  Bookings  </a></li>
-                                <li><a href="dashboard-review.html"> Reviews </a></li>
+                                <li><a href="{{route('dashboard')}}"> Edit profile</a></li>
+                                <li><a href="{{route('dashboard')}}"> Add Listing</a></li>
+                                <li><a href="{{route('dashboard')}}">  Bookings  </a></li>
+                                <li><a href="{{route('dashboard')}}"> Reviews </a></li>
                                 <li><a href="#">Log Out</a></li>
                             </ul>
                         </div>                      
                         @endauth
 
-                          <div class="home-btn"><a href=""><i class="fas fa-home"></i></a></div>
+                          <div class="home-btn"><a href="{{route('home')}}"><i class="fas fa-home"></i></a></div>
                         <!-- nav-button-wrap-->
                         <div class="nav-button-wrap color-bg">
                             <div class="nav-button">
@@ -125,61 +126,61 @@
                                         <a href="#" class="act-link">Everyday Needs<i class="fas fa-caret-down"></i></a>
                                         <!--second level -->
                                         <ul>
-                                            <li><a href="index.php"></a></li>
+                                            <li><a href="#"></a></li>
 
                                             <li>
-                                        <a href="subcategory/apply-for-loan">Apply For Loan</a>
+                                        <a href="{{route('subcategory' ,['slug' => 'apply-for-loan'])}}">Apply For Loan</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
 
                                     <li>
-                                        <a href="subcategory/hire-anything">Hire Anything</a>
+                                        <a href="{{route('subcategory',['slug'=>'hire-anything'])}}">Hire Anything</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
 
                                     <li>
-                                        <a href="subcategory/doctor">Doctor</a>
+                                        <a href="{{route('subcategory',['slug'=>'doctor'])}}">Doctor</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
                                     <li>
-                                        <a href="subcategory/web-development">Web Development</a>
+                                        <a href="{{route('subcategory',['slug'=>'web-development'])}}">Web Development</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
                                     <li>
-                                        <a href="subcategory/b2b">B2B</a>
+                                        <a href="{{route('subcategory',['slug'=>'b2b'])}}">B2B</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
                                            <li>
-                                        <a href="subcategory/shop-and-showroom">Shop & Showroom</a>
+                                        <a href="{{route('subcategory',['slug'=>'shop-and-showroom'])}}">Shop & Showroom</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
                                     <li>
-                                        <a href="subcategory/contractor">Contractor</a>
+                                        <a href="{{route('subcategory',['slug'=>'contractor'])}}">Contractor</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
 
                                     <li>
-                                        <a href="subcategory/home-improvement">Home Improvement</a>
+                                        <a href="{{route('subcategory',['slug'=>'home-improvement'])}}">Home Improvement</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
                                       <li>
-                                        <a href="subcategory/restaurant">Restaurant</a>
+                                        <a href="{{route('subcategory',['slug'=>'restaurant'])}}">Restaurant</a>
                                         <!--second level -->
 
                                         <!--second level end-->
@@ -189,14 +190,14 @@
 
 
                                       <li>
-                                        <a href="subcategory/emergency">Emergency</a>
+                                        <a href="{{route('subcategory',['slug'=>'emergency'])}}">Emergency</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
 
                                       <li>
-                                        <a href="subcategory/hotel">Hotel</a>
+                                        <a href="{{route('subcategory',['slug'=>'hotel'])}}">Hotel</a>
                                         <!--second level -->
 
                                         <!--second level end-->
@@ -210,29 +211,29 @@
                                         </ul>
                                         <!--second level end-->
                                                                       <li>
-                                          <a href="subcategory/booking">Booking</a>
+                                          <a href="{{route('subcategory',['slug' => 'booking'])}}">Booking</a>
                                         <!--second level -->
 
                                         <!--second level end-->
                                     </li>
                                     <li>
-                                        <a href="subcategory/property">Properties</a></li>
+                                        <a href="{{route('subcategory' ,['slug' => 'Property'])}}">Properties</a></li>
                                         <!--second level -->
 
                                         <!--second level end-->
 
                                     <li>
-                                        <a href="subcategory/education">Education</a>
+                                        <a href="{{route('subcategory',['slug' => 'education'])}}">Education</a>
                                         <!--second level -->
                                        </li>
                                     <!-- <li><a href="comingson.php">Shop</a></li> -->
 
                                     <!-- <li>
-                                        <a href="subcategory/insurance">Insurance</a></li> -->
+                                        <a href="/insurance">Insurance</a></li> -->
                                          <li>
-                                        <a href="subcategory/insurance">Insurance</a>
+                                        <a href="{{route('subcategory' ,['slug' => 'insurance'])}}">Insurance</a>
                                         
-                                    <li><a href="subcategory/on-call">On Call </a></li>
+                                    <li><a href="{{route('subcategory' ,['slug' => 'on-call'])}}">On Call </a></li>
                                    
                                     
                                     <!--second level end-->

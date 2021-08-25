@@ -9,4 +9,10 @@ class categories extends Model
 {
     use HasFactory;
     protected $fillable = ['category'];
+
+    public function list_sub()
+    {
+        return $this->belongsTo('App\Models\subcategories','id','category_id');
+    }
+  
 }

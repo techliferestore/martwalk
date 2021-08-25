@@ -9,7 +9,7 @@ class b_times extends Model
 {
     use HasFactory;
     protected $fillable = ['open','close','mon','tue','wed'
-    ,'fri','sat','sun'      
+    ,'fri','sat','sun','b_id'      
            
         ];
 

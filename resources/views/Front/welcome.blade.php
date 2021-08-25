@@ -6,7 +6,7 @@
                 <div class="content">
                     <!--section -->
                     <section class="hero-section no-padding" data-scrollax-parent="true" id="sec1">
-               <div class="slider-container-wrap fl-wrap color3-bg">
+               <div class="slider-container-wrap fl-wrap ">
                   <div class="slider-container">
                      <!-- slideshow-item -->
                      <div class="slider-item fl-wrap">
@@ -22,7 +22,8 @@
                                  <span class="section-separator"></span>
                                  <h3>Let's start exploring the world together with Martwalk</h3>
                               </div>
-                              @livewire('search')
+                              <livewire:search-keyword />
+
                            </div>
                         </div>
                      </div>
@@ -107,10 +108,10 @@
                                 <div class="gallery-item">
                                     <div class="grid-item-holder">
                                         <div class="listing-item-grid">
-                                            <div class="listing-counter"><span></span> akv</div>
-                                            <img  src="images/city/call.jpg"   alt="City">
+                                            <div class="listing-counter"><span></span> On Call</div>
+                                          <a href="{{route('subcategory' ,['slug' => 'on-call'])}}">  <img  src="images/city/call.jpg"   alt="City"></a>
                                             <div class="listing-item-cat">
-                                                <h3><a href="/subcategory/"></a></h3>
+                                                <h3><a href="/sub/"></a></h3>
                                                 <div class="weather-grid"   data-grcity="Rome"></div>
                                                 <div class="clearfix"></div>
                                                 <p>Have you got any Requirement? Don't worry make call us now.</p>
@@ -126,8 +127,8 @@
                                 <div class="gallery-item gallery-item-second">
                                     <div class="grid-item-holder">
                                         <div class="listing-item-grid">
-                                            <img  src="images/bg/insurance.jpg"   alt="insurance">
-                                             <div class="listing-counter"><span></span>  </div>
+                                          <a href="{{route('subcategory' ,['slug' => 'insurance'])}}"> <img  src="images/bg/insurance.jpg"  alt="insurance"> </a>
+                                           <div class="listing-counter"><span>Insurance</span>  </div>
                                             <div class="listing-item-cat">
                                            <h3><a href="/subcategory/"></a></h3>
                                                 <div class="weather-grid"   data-grcity="Paris"></div>
@@ -145,8 +146,8 @@
                                 <div class="gallery-item">
                                     <div class="grid-item-holder">
                                         <div class="listing-item-grid">
-                                            <div class="listing-counter"><span></span>  </div>
-                                            <img  src="images/city/property.jpg"   alt="city">
+                                            <div class="listing-counter"><span> Properties</span>  </div>
+                                          <a href="{{route('subcategory' ,['slug' => 'Property'])}}" > <img  src="images/city/property.jpg"   alt="city"> </a>
                                             <div class="listing-item-cat">
                                                 <h3><a href="/subcategory/"></a></h3>
                                                 <div class="weather-grid"   data-grcity="Rome"></div>
@@ -164,8 +165,8 @@
                                 <div class="gallery-item">
                                     <div class="grid-item-holder">
                                         <div class="listing-item-grid">
-                                            <div class="listing-counter"><span></span>  </div>
-                                            <img  src="images/bg/book.jpg"   alt="book">
+                                            <div class="listing-counter"><span>Booking</span>  </div>
+                                           <a href="{{route('subcategory' ,['slug' => 'booking'])}}"> <img  src="images/bg/book.jpg"   alt="book"> </a>
                                             <div class="listing-item-cat">
                                                 <h3><a href="/subcategory/"></a></h3>
                                                 <div class="weather-grid"   data-grcity="Rome"></div>
@@ -183,8 +184,8 @@
                                 <div class="gallery-item">
                                     <div class="grid-item-holder">
                                         <div class="listing-item-grid">
-                                            <div class="listing-counter"><span></span>  </div>
-                                            <img  src="images/city/education.jpg"   alt="City">
+                                            <div class="listing-counter"><span>Education</span>  </div>
+                                          <a href="{{route('subcategory' ,['slug' => 'education'])}}" > <img  src="images/city/education.jpg"   alt="City"> </a>
                                             <div class="listing-item-cat">
                                                 <h3><a href="/subcategory/"></a></h3>
                                                 <div class="weather-grid"   data-grcity="Rome"></div>
@@ -200,7 +201,7 @@
                             </div>
                             <!-- portfolio end -->
  
- <a href="all-listing.php" class="btn color-bg">Explore All Business<i class="fas fa-caret-right"></i></a>
+ <a href="{{route('alllisting')}}" class="btn color-bg">Explore All Business<i class="fas fa-caret-right"></i></a>
 
 
 </section>
@@ -223,23 +224,40 @@
                   <div class="listing-carousel  fl-wrap ">
                    
                      <!--slick-slide-item-->
-                     @foreach($user as $list)
+                     @forelse($user as $list)
                      <div class="slick-slide-item">
                         <!-- listing-item  -->
                         <div class="listing-item ">
                            <article class="geodir-category-listing fl-wrap">
                               <div class="geodir-category-img">
-                                 <a href="/detail/"><img src="images/gal/4.jpg" style="height: 200px;" alt="Gate"></a>
-                                 <div class="listing-avatar"><a href="#"><img src="images/avatar/3.jpg" alt="Avtar"></a>
-                                    <span class="avatar-tooltip">Added By <strong>{{$list->name}}</strong></span>
+                                 <a href="{{$list->slug}}/@if(isset($list->City->name)){{$list->City->name}}@endif/{{$list->user_id}}">
+                                    @if($list->header_image)
+                                    <img src="{{asset('/')}}storage/{{$list->header_image}}" style="height: 200px;" alt="Gate"></a>
+                                    @else 
+                                    <img src="images/gal/4.jpg" style="height: 200px;" alt="Gate"></a>
+
+                                    @endif
+                                 <div class="listing-avatar">
+                                   
+                                    @if($list->user->profile_image)
+                                    <a href="#"><img src="{{asset('/')}}storage/{{$list->user->profile_image}}" alt="Avtar"></a>
+                                 
+                                   @else 
+                                   
+                                   <a href="#"><img src="{{asset('/')}}images/avatar/3.jpg" alt="Avtar"></a>
+                                   @endif
+                                   
+                                  
+
+                                    <span class="avatar-tooltip">Added By <strong>@if(isset($list->user->name)){{$list->user->name}}@endif</strong></span>
                                  </div>
-                              
+                               
                                  <div class="sale-window">Open</div>
 
                               
                                 
                                  <div class="geodir-category-opt">
-                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="8"></div>
+                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="3"></div>
                                     <div class="rate-class-name">
                                        <div class="score">
                                        <strong> Pleasent</strong>
@@ -256,12 +274,14 @@
                               <div class="geodir-category-content fl-wrap" style="height: 300px;">
                                  <div class="geodir-category-content-title fl-wrap">
                                     <div class="geodir-category-content-title-item">
-                                       <h3 class="title-sin_map" style="text-transform: capitalize; "><a href="{{route('detail',['id'=>$list->user_id])}}">{{$list->bussiness_name}}</a></h3>
-                                       <div class="geodir-category-location fl-wrap" style="display: inline-block;
+                                       <h3 class="title-sin_map" style="text-transform: capitalize; ">
+                                          <a href="{{$list->slug}}/@if(isset($list->City->name)){{$list->City->name}}@endif/{{$list->user_id}}">  {{$list->bussiness_name}}</a>
+                                          </h3>
+                                          <div class="geodir-category-location fl-wrap" style="display: inline-block;
                                           width: 200px;
                                           white-space: nowrap;
                                           overflow: hidden !important;
-                                          text-overflow: ellipsis;color: grey;"><a href="#" class="map-item"><i class="fas fa-map-marker-alt"></i> {{$list->address}}, {{$list->city}},  {{$list->country}}</a></div>
+                                          text-overflow: ellipsis;color: grey;"><a href="#" class="map-item"><i class="fas fa-map-marker-alt"></i> {{$list->address}}, {{$list->City->name}},{{$list->pin}},{{$list->State->name}},India</a></div>
                                     </div>
                                  </div>
                                  <p> {{$list->about}}</p>
@@ -285,7 +305,9 @@
                         </div>
                         <!-- listing-item end -->
                      </div>
-                    @endforeach
+                     @empty
+                     
+                    @endforelse
                   </div>
                   <!--listing-carousel end-->
                   <div class="swiper-button-prev sw-btn"><i class="fa fa-long-arrow-left"></i></div>
@@ -310,7 +332,7 @@
                            <div class="colomn-text-title">
                               <h3>Most Popular Business</h3>
                               <p>These are our verified business, you may deal and if you want to get more knowledge about them so you may click here or make call anytime.</p>
-                              <a href="all-listing.php" class="btn  color2-bg float-btn">View All Business<i class="fas fa-caret-right"></i></a>
+                              <a href="{{route('alllisting')}}" class="btn  color2-bg float-btn">View All Business<i class="fas fa-caret-right"></i></a>
                            </div>
                         </div>
                      </div>
@@ -325,7 +347,7 @@
                                  <div class="hotel-card fl-wrap title-sin_item">
                                     <div class="geodir-category-img card-post">
                                        <a href="detail/slug"><img src="images/gal/3.jpg" style="height: 200px;" alt="Chair"></a>
-                                       <div class="listing-avatar" style="width: 100px;"><img src="sub-img/wh.png" alt="whats app" style="height: 20px; width: 20px;"> <strong style="color:white;background-color:#18458B; "></strong></div>
+                                       <div class="listing-avatar" style="width: 100px;"><img src="#" alt="whats app" style="height: 20px; width: 20px;"> <strong style="color:white;background-color:#18458B; "></strong></div>
                                        <div class="sale-window">Verified</div>
                                        <div class="geodir-category-opt">
                                           
@@ -525,7 +547,7 @@ and make call.</p>
                              <!--slick-item -->
                              <div class="slick-item">
                                 <div class="text-carousel-item">
-                                   <div class="popup-avatar"><img src="images/sahil.jpg" alt="sahil"></div>
+                                   <div class="popup-avatar"><img src="#" alt="sahil"></div>
                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div>
                                    <div class="review-owner fl-wrap">Sahil - <span>Happy Client</span></div>
                                    <p> "It is a great website to promote a business and improve visibility of a website. It?s easy to use feature also makes it popular website.i surprised after visiting this website coz it has got different look and best service.I would like to be part of this.
@@ -539,7 +561,7 @@ and make call.</p>
                              <!--slick-item -->
                              <div class="slick-item">
                                 <div class="text-carousel-item">
-                                   <div class="popup-avatar"><img src="images/avatar/Rajkumar.jpg" alt="Raj Kumar"></div>
+                                   <div class="popup-avatar"><img src="#" alt="Raj Kumar"></div>
                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="4"> </div>
                                    <div class="review-owner fl-wrap">Raj Kumar - <span>Happy Client</span></div>
                                    <p> "Mart Walk for providing unique directory submission services. Each listing includes an exclusive business listing page with comprehensive business information such as URL, Title, Description, Logo, Physical Address, Location map, Products, Services, Work progress , etc.
@@ -570,7 +592,7 @@ and make call.</p>
                              <!--slick-item -->
                              <div class="slick-item">
                                 <div class="text-carousel-item">
-                                   <div class="popup-avatar"><img src="images/monti.jpg" alt="monti"></div>
+                                   <div class="popup-avatar"><img src="#" alt="monti"></div>
                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div>
                                    <div class="review-owner fl-wrap">Monti - <span>Happy Client</span></div>
                                    <p> "I would just like to say as a very new small business with a limited budget , one of the hardest tasks is getting enough market exposure. Your Business Directory is a fantastic platform and will hit my target market. I will pass on your fantastic website to my fellow entrepreneurs."</p>

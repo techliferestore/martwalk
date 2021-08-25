@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
+
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use App\Models\User;
@@ -11,6 +12,7 @@ use App\Models\countries;
 use App\Models\states;
 use App\Models\cities;
 use App\Models\b_times;
+use Illuminate\Support\Str;
 
 use Livewire\WithFileUploads;
 class AddBussiness extends Component
@@ -24,7 +26,7 @@ class AddBussiness extends Component
     public $services=false; 
     public $gallery=false;
     public $timing=false; 
-    public $profile_id;
+    public $profile_id,$pid;
     public $bussiness_name ,$categories ,$subcategories,$subcategory,$category;
     public $profile;
     public $booking;
@@ -56,8 +58,9 @@ $service2,$service_details2,$img_6;
 
     {
 $this->profile_id=$profile_id;
-       $cat= $this->categories = categories::all();
-       $this->subcategories = collect();
+
+        $this->categories = categories::all();
+        $cat= $this->subcategories = collect();
 //dd($cat);
        
 $this->countries = countries::all();
@@ -72,12 +75,17 @@ $this->cities = collect();
 public function time_create()
 {
 
-   
-    $bd= bussinesses::find('1');
-  $cat=$bd->user_id;
+   $pid=$this->profile_id;
+    
+    $validatedDate = $this->validate([
+ 
+        'open' => 'required',
+        'close' => 'required',
+         
+    ]);
 
- //dd($cat);
-     b_times::create([
+    $post=b_times::updateOrCreate(['b_id'=>$this->profile_id  ],[
+     
      
         'open'=>$this->open,   
         'close' => $this->close,
@@ -88,7 +96,7 @@ public function time_create()
         'fri'=>$this->fri,
         'sat'=>$this->sat,
         'sun'=>$this->sun ,
-          'b_id'=>$bd->user_id
+          'b_id'=>$this->profile_id,
 
     
     ]);
@@ -161,16 +169,17 @@ public function time_create()
         ]);
  
        
-        
-      
+        $slug = Str::of($this->bussiness_name)->slug('-');
+     
         $post=bussinesses::updateOrCreate(['user_id'=>$this->userId],[
          
             'keywords'=>$this->tag,   
             'bussiness_name' => $this->bussiness_name,
-           'category'=>$this->selectedCategory,            
-            'subcategory'=>$this->selectedSubcategory,
+            'slug'=>$slug,
+           'category_id'=>$this->selectedCategory,            
+            'subcategory_id'=>$this->selectedSubcategory,
          'user_id'=> $this->userId,
-         
+        
         ]);
        //dd($post);
 
@@ -193,28 +202,30 @@ public function time_create()
          
        'pin'=>'required',
        'about'=>'required',
-       'whatsapp'=>'required|unique:bussinesses|max:10',
+       'whatsapp'=>'required|max:10',
        'address'=>'required',
        'header_image'=>'image|max:1024',//1mb
        //'selectedCountry'=>'required'
         
         ]);
  
-    
   
-        $post = bussinesses::find($this->profile_id);
-   
+  
+        $post = bussinesses::where('user_id',$this->profile_id);
       
+        
+   
+        
         $post->update([
          
-           'header_image'=> $this->header_image->store('headerImage'),
+           'header_image'=> $this->header_image->store('headerImage','public'),
                  'about'=>$this->intro,
                  'whatsapp'=>$this->whatsapp,               
                   'address'=>$this->address,
                   'pin'=>$this->pin,
-'country'=>$this->selectedCountry,
-'state'=>$this->selectedState,
-'city'=>$this->selectedCity,
+'country_id'=>$this->selectedCountry,
+'state_id'=>$this->selectedState,
+'city_id'=>$this->selectedCity,
 'wifi'=>$this->wifi,
 'parking'=>$this->parking,
 'power'=>$this->power,
@@ -236,11 +247,12 @@ public function time_create()
 
      public function updateGallery()
      {
-        $post = bussinesses::find(1);
+        $post = bussinesses::where('user_id',$this->profile_id);
+      
+       
         if($this->img1){
-            $post = bussinesses::find(1);
-            //$pos=$post->img_1;
-            //dd($pos);
+            $post = bussinesses::where('user_id',$this->profile_id);
+           
             Storage::delete('$post->img_1');
  
      
@@ -249,10 +261,10 @@ public function time_create()
         }
       
         $post->update([
-        'img_1'=> $this->img1->store('gallery'),
-        'img_2'=> $this->img2->store('gallery'),
-        'img_3'=> $this->img3->store('gallery'),
-        'img_4'=> $this->img4->store('gallery')
+        'img_1'=> $this->img1->store($this->profile_id.'gallery','public'),
+        'img_2'=> $this->img2->store($this->profile_id.'gallery','public'),
+        'img_3'=> $this->img3->store($this->profile_id.'gallery','public'),
+        'img_4'=> $this->img4->store($this->profile_id.'gallery','public')
         ]);
         
 
@@ -263,18 +275,10 @@ public function time_create()
      public function social_links()
 
      {
-        $validatedDate = $this->validate([
- 
-         
-           'fb'=>'required',
-           'tw'=>'required',
-           'yt'=>'required',
-           'ins'=>'required',
-           'website'=>'required'
-             ]);
+        
 
            
-        $post = bussinesses::find(1);
+             $post = bussinesses::where('user_id',$this->profile_id);
    
       
         $post->update([
@@ -304,7 +308,7 @@ public function time_create()
              ]);
 
            
-        $post = bussinesses::find(1);
+             $post = bussinesses::where('user_id',$this->profile_id);
    
       
         $post->update([       
@@ -317,8 +321,8 @@ public function time_create()
 'service_price2'=>$this->service_price2,
 'service2'=>$this->service2,
 'service_details2'=>$this->service_details2,
-'img_5'=> $this->img_5->store('services'),
-'img_6'=> $this->img_6->store('services'),
+'img_5'=> $this->img_5->store($this->profile_id.'service','public'),
+'img_6'=> $this->img_6->store($this->profile_id.'service','public'),
         ]);
    
   
@@ -329,20 +333,14 @@ public function time_create()
 
      }
 
-       public function edit_bussiness()
-    {
-       
-       
-        $post = bussinesses::findOrFail($this->profile_id);
-        //dd($post);
-          
-            
-                $this->bussiness_name=$post->bussiness_name;
-             $this->tag=$post->keywords;
-            $this->selectedCategory=$post->category;
-            $this->selectedSubcategory=$post->subcategory;
-       
+     
 
+       public function edit_bussiness()
+    {   
+      
+           
+       
+    
         $this->about=false;
         $this->social=false;
         $this->services=false; 
@@ -356,11 +354,12 @@ public function time_create()
     public function about()
     {
 
-        $post = bussinesses::findOrFail($this->profile_id);
-        //dd($post);
+        $posts = bussinesses::where('user_id',$this->profile_id)->get();
+        //dd($posts);
           
-            
+            foreach ($posts as $post)
                 $this->intro=$post->about;
+                $this->whatsapp=$post->whatsapp;
              $this->address=$post->address;
              $this->pin=$post->pin;
              $this->country=$post->selectedCountry;
@@ -373,7 +372,8 @@ public function time_create()
                $this->detail_1=$post->detail_1;
                $this->detail_2=$post->detail_2;
                $this->detail_3=$post->detail_3;
-$this->whatsapp=$post->phone;
+               $this->header_image=$post->header_image;
+               
              
 
         $this->bussiness = false;
@@ -389,8 +389,9 @@ $this->whatsapp=$post->phone;
     public function social()
     {
        
-        $post = bussinesses::findOrFail(1);
-        //dd($post);
+        $posts = bussinesses::where('user_id',$this->profile_id)->get();
+      
+        foreach ($posts as $post)
           
             
                 $this->fb=$post->fb;

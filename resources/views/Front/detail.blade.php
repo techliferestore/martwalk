@@ -1,11 +1,28 @@
 @extends('layouts.layout_home')
+@section('title')
+
+@endsection
 @section('content')
  <!-- content-->
- @foreach($post as $bssns)
+
+
  <div class="content">
                     <!--  section  -->
+                
+                        
+                 
                     <section class="list-single-hero" data-scrollax-parent="true" id="sec1">
-                        <div class="bg par-elem "  data-bg="images/bg/9.jpg" data-scrollax="properties: { translateY: '30%' }"></div>
+                        <div class="bg par-elem " 
+                        
+                        @if($post->header_image)
+                        data-bg="{{asset('/')}}storage/{{$post->header_image}}"
+                        @else
+                        data-bg="{{asset('/')}}images/bg/23.jpg"
+                        @endif
+                        
+                        
+                        
+                        data-scrollax="properties: { translateY: '30%' }"></div>
                         <div class="list-single-hero-title fl-wrap">
                             <div class="container">
                                 <div class="row">
@@ -13,12 +30,14 @@
                                         <div class="listing-rating-wrap">
                                             <div class="listing-rating card-popup-rainingvis" data-starrating2="5"></div>
                                         </div>
-                                        <h2><span>{{$bssns->bussiness_name}}</span></h2>
+                                        <h2><span>{{ucfirst($post->bussiness_name)}}</span></h2>
                                         <div class="list-single-header-contacts fl-wrap">
                                             <ul>
-                                                <li><i class="far fa-phone"></i><a  href="#">+7(111)123456789</a></li>
-                                                <li><i class="far fa-map-marker-alt"></i><a  href="#">USA 27TH Brooklyn NY</a></li>
-                                                <li><i class="far fa-envelope"></i><a  href="#">yourmail@domain.com</a></li>
+                                               
+                                                
+                                                <li><i class="far fa-phone"></i><a  href="#">{{$post->whatsapp}}</a></li>
+                                                <li><i class="far fa-map-marker-alt"></i><a  href="#">{{ucfirst($post->address)}},{{$post->City->name}},{{$post->State->name}},{{$post->Country->country_name}}</a></li>
+                                                <li><i class="far fa-envelope"></i><a  href="#">{{$post->user->email}}</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -85,8 +104,8 @@
                                     </div>
                                 </div>
                                 <div class="breadcrumbs-hero-buttom fl-wrap">
-                                    <div class="breadcrumbs"><a href="#">Home</a><a href="#">Listings</a><a href="#">New York</a><span>Listing Single</span></div>
-                                    <div class="list-single-hero-price">AWG/NIGHT<span>$ 320</span></div>
+                                    <div class="breadcrumbs"><a href="{{route('home')}}">Home</a><a href="{{ url()->previous() }}">Listings</a><span>{{ucfirst($post->bussiness_name)}}</span></div>
+                                    <div class="list-single-hero-price">TIME<span>9am -9 pm</span></div>
                                 </div>
                             </div>
                         </div>
@@ -108,8 +127,8 @@
                                     <ul>
                                         <li><a class="act-scrlink" href="#sec1">Top</a></li>
                                         <li><a href="#sec2">Details</a></li>
-                                        <li><a href="#sec3">Amenities</a></li>
-                                        <li><a href="#sec4">Rooms</a></li>
+                                        <li><a href="#sec3">Facilities</a></li>
+                                        <li><a href="#sec4">Services</a></li>
                                         <li><a href="#sec5">Reviews</a></li>
                                     </ul>
                                 </nav>
@@ -142,10 +161,20 @@
                                             <div class="gallery-items grid-small-pad  list-single-gallery three-coulms lightgallery">
                                                 <!-- 1 -->
                                                 <div class="gallery-item ">
-                                                    <div class="grid-item-holder">
+                                                    <div class="grid-item-holder">  
                                                         <div class="box-item">
-                                                            <img  src="images/gal/9.jpg"   alt="">
+
+                                                            @if($post->img_1)
+                                                          <img src="{{asset('/')}}storage/{{$post->img_1}}" alt="" style="width:243px; height:161px;" >
+                                                          <a href="{{asset('/')}}storage/{{$post->img_1}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                       
+                                                            @else 
+                                                            
+                                                            <img  src="{{asset('/')}}images/gal/9.jpg"   alt="">
                                                             <a href="images/gal/9.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                       
+                                                       @endif
+                                                       
                                                         </div>
                                                     </div>
                                                 </div>
@@ -154,8 +183,14 @@
                                                 <div class="gallery-item">
                                                     <div class="grid-item-holder">
                                                         <div class="box-item">
-                                                            <img  src="images/gal/7.jpg"   alt="">
+                                                            @if($post->img_2)
+                                                            <img src="{{asset('/')}}storage/{{$post->img_2}}" alt="" style="width:243px; height:161px;" >
+                                                            <a href="{{asset('/')}}storage/{{$post->img_2}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                         
+                                                              @else 
+                                                            <img  src="{{asset('/')}}images/gal/7.jpg"   alt="">
                                                             <a href="images/gal/7.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                       @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -164,8 +199,14 @@
                                                 <div class="gallery-item gallery-item-second">
                                                     <div class="grid-item-holder">
                                                         <div class="box-item">
-                                                            <img  src="images/gal/3.jpg"   alt="">
+                                                            @if($post->img_3)
+                                                            <img src="{{asset('/')}}storage/{{$post->img_3}}" alt="" style="width:490px; height:327px;" >
+                                                            <a href="{{asset('/')}}storage/{{$post->img_3}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                         
+                                                              @else 
+                                                            <img  src="{{asset('/')}}images/gal/3.jpg"   alt="">
                                                             <a href="images/gal/3.jpg" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                        @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,8 +215,17 @@
                                                 <div class="gallery-item">
                                                     <div class="grid-item-holder">
                                                         <div class="box-item">
-                                                            <img  src="images/gal/4.jpg"   alt="">
+
+                                                            @if($post->img_4)
+                                                            <img src="{{asset('/')}}storage/{{$post->img_4}}" alt="" style="width:243px; height:161px;" >
+                                                            <a href="{{asset('/')}}storage/{{$post->img_4}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                         
+                                                              @else 
+
+                                                            <img  src="{{asset('/')}}images/gal/4.jpg"   alt="">
                                                             <a href="images/gal/4.jpg" class="gal-link popup-image"><i class="fa fa-search"  ></i></a>
+                                                      
+                                                      @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -184,8 +234,14 @@
                                                 <div class="gallery-item">
                                                     <div class="grid-item-holder">
                                                         <div class="box-item">
-                                                            <img  src="images/gal/5.jpg"   alt="">
+                                                            @if($post->img_5)
+                                                            <img src="{{asset('/')}}storage/{{$post->img_5}}" alt="" style="width:243px; height:161px;" >
+                                                            <a href="{{asset('/')}}storage/{{$post->img_5}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                         
+                                                              @else 
+                                                            <img  src="{{asset('/')}}images/gal/5.jpg"   alt="">
                                                             <a href="images/gal/5.jpg" class="gal-link popup-image"><i class="fa fa-search"  ></i></a>
+                                                       @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -194,8 +250,14 @@
                                                 <div class="gallery-item">
                                                     <div class="grid-item-holder">
                                                         <div class="box-item">
-                                                            <img  src="images/gal/6.jpg"   alt="">
-                                                            <div class="more-photos-button dynamic-gal"  data-dynamicPath="[{'src': 'images/gal/2.jpg'}, {'src': 'images/gal/8.jpg'},{'src': 'images/gal/1.jpg'}]">Other <span>4 photos</span><i class="far fa-long-arrow-right"></i></div>
+                                                            @if($post->img_6)
+                                                            <img src="{{asset('/')}}storage/{{$post->img_6}}" alt="" style="width:243px; height:161px;" >
+                                                            <a href="{{asset('/')}}storage/{{$post->img_6}}" class="gal-link popup-image"><i class="fa fa-search"></i></a>
+                                                         
+                                                              @else 
+                                                            <img  src="{{asset('/')}}images/gal/6.jpg"   alt="">
+                                                            <div> </div>
+                                                        @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -208,13 +270,14 @@
                                             <!-- inline-facts -->
                                             <div class="inline-facts-wrap">
                                                 <div class="inline-facts">
-                                                    <i class="fal fa-bed"></i>
+                                                    <i class="fal fa-hand-holding-usd"></i>
+                                                    <h6>Booking</h6><br>
                                                     <div class="milestone-counter">
                                                         <div class="stats animaper">
                                                             45
                                                         </div>
                                                     </div>
-                                                    <h6>Hotel Rooms</h6>
+                                                    
                                                 </div>
                                             </div>
                                             <!-- inline-facts end -->
@@ -222,38 +285,38 @@
                                             <div class="inline-facts-wrap">
                                                 <div class="inline-facts">
                                                     <i class="fal fa-users"></i>
+                                                    <h6>Customers Visit</h6>
+                                                    <br>
                                                     <div class="milestone-counter">
                                                         <div class="stats animaper">
                                                             2557
                                                         </div>
                                                     </div>
-                                                    <h6>Customers Every Year</h6>
+                                                  
                                                 </div>
                                             </div>
                                             <!-- inline-facts end -->
                                             <!-- inline-facts -->
                                             <div class="inline-facts-wrap">
                                                 <div class="inline-facts">
-                                                    <i class="fal fa-taxi"></i>
+                                                    <i  class="fal fa-clock"></i>
                                                     <div class="milestone-counter">
                                                         <div class="stats animaper">
-                                                            15
+                                                            
                                                         </div>
                                                     </div>
-                                                    <h6>Distance to Center</h6>
+                                                    <h6>Open Now</h6>
                                                 </div>
                                             </div>
                                             <!-- inline-facts end -->
                                             <!-- inline-facts -->
                                             <div class="inline-facts-wrap">
                                                 <div class="inline-facts">
-                                                    <i class="fal fa-cocktail"></i>
+                                                    <i class="fal fa-share"></i>
                                                     <div class="milestone-counter">
-                                                        <div class="stats animaper">
-                                                            4
-                                                        </div>
+                                                        
                                                     </div>
-                                                    <h6>Restaurant Inside</h6>
+                                                    <h6>Share</h6>
                                                 </div>
                                             </div>
                                             <!-- inline-facts end -->                                                                        
@@ -261,28 +324,37 @@
                                         <!--   list-single-main-item -->
                                         <div class="list-single-main-item fl-wrap">
                                             <div class="list-single-main-item-title fl-wrap">
-                                                <h3>About Hotel </h3>
+                                                <h3>About Bussiness </h3>
                                             </div>
-                                            <p>Praesent eros turpis, commodo vel justo at, pulvinar mollis eros. Mauris aliquet eu quam id ornare. Morbi ac quam enim. Cras vitae nulla condimentum, semper dolor non, faucibus dolor. Vivamus adipiscing eros quis orci fringilla, sed pretium lectus viverra. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec nec velit non odio aliquam suscipit. Sed non neque faucibus, condimentum lectus at, accumsan enim. Fusce pretium egestas cursus. Etiam consectetur, orci vel rutrum volutpat, odio odio pretium nisiodo tellus libero et urna. Sed commodo ipsum ligula, id volutpat risus vehicula in. Pellentesque non massa eu nibh posuere bibendum non sed enim. Maecenas lobortis nulla sem, vel egestas  . </p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat .</p>
-                                            <a href="https://vimeo.com/70851162" class="btn flat-btn color-bg big-btn float-btn image-popup">Video Presentation <i class="fal fa-play"></i></a>
+                                             <p>
+                                                {{ substr($post->about, 0, 160) }}                                            
+                                                                                                                            
+                                            
+                                            </p>
+                                           
                                         </div>
                                         <!--   list-single-main-item end -->
                                         <!--   list-single-main-item -->
                                         <div class="list-single-main-item fl-wrap" id="sec3">
                                             <div class="list-single-main-item-title fl-wrap">
-                                                <h3>Amenities</h3>
+                                                <h3>Facilities</h3>
                                             </div>
                                             <div class="listing-features fl-wrap">
                                                 <ul>
+                                                    @if($post->power)
                                                     <li><i class="fal fa-rocket"></i> Elevator in building</li>
+                                                    @endif
+                                                    @if($post->wifi)
                                                     <li><i class="fal fa-wifi"></i> Free Wi Fi</li>
+                                                    @endif
+                                                    @if($post->parking)
                                                     <li><i class="fal fa-parking"></i> Free Parking</li>
+                                                    @endif
+                                                    @if($post->air)
                                                     <li><i class="fal fa-snowflake"></i> Air Conditioned</li>
-                                                    <li><i class="fal fa-plane"></i>Airport Shuttle</li>
-                                                    <li><i class="fal fa-paw"></i> Pet Friendly</li>
-                                                    <li><i class="fal fa-utensils"></i> Restaurant Inside</li>
-                                                    <li><i class="fal fa-wheelchair"></i> Wheelchair Friendly</li>
+                                                    @endif
+                                                  
+                                                 
                                                 </ul>
                                             </div>
                                             <span class="fw-separator"></span>
@@ -290,12 +362,9 @@
                                                 <h3>Tags</h3>
                                             </div>
                                             <div class="list-single-tags tags-stylwrap">
-                                                <a href="#">Hotel</a>
+                                                <a href="#"> {{$post->keywords}} </a>
                                                 <a href="#">Hostel</a>
-                                                <a href="#">Room</a>
-                                                <a href="#">Spa</a>
-                                                <a href="#">Restourant</a>
-                                                <a href="#">Parking</a>                                                                               
+                                                                             
                                             </div>
                                         </div>
                                         <!--   list-single-main-item end -->     
@@ -303,47 +372,50 @@
                                         <div class="accordion mar-top">
                                             <a class="toggle act-accordion" href="#"> Details option   <span></span></a>
                                             <div class="accordion-inner visible">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.</p>
+                                                <p>{{$post->detail_1}}</p>
                                             </div>
                                             <a class="toggle" href="#"> Details option 2  <span></span></a>
                                             <div class="accordion-inner">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.</p>
+                                                <p>{{$post->detail_2}}</p>
                                             </div>
                                             <a class="toggle" href="#"> Details option 3  <span></span></a>
                                             <div class="accordion-inner">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.</p>
+                                                <p>{{$post->detail_3}}</p>
                                             </div>
                                         </div>
                                         <!-- accordion end -->                                                     
                                         <!--   list-single-main-item -->
                                         <div class="list-single-main-item fl-wrap" id="sec4">
                                             <div class="list-single-main-item-title fl-wrap">
-                                                <h3>Available Rooms</h3>
+                                                <h3>Available Services</h3>
                                             </div>
                                             <!--   rooms-container -->
                                             <div class="rooms-container fl-wrap">
                                                 <!--  rooms-item -->
                                                 <div class="rooms-item fl-wrap">
                                                     <div class="rooms-media">
-                                                        <img src="images/gal/5.jpg" alt="">
-                                                        <div class="dynamic-gal more-photos-button" data-dynamicPath="[{'src': 'images/gal/slider/1.jpg'}, {'src': 'images/gal/slider/2.jpg'},{'src': 'images/gal/slider/3.jpg'}]">  View Gallery <span>3 photos</span> <i class="far fa-long-arrow-right"></i></div>
+
+                                                        @if('$post->img_5')
+
+                                                        
+                                                        <img src="{{asset('/')}}storage/{{$post->img_5}}" alt=""  >
+                                                        @else
+                                                        <img src="{{asset('/')}}images/gal/5.jpg" alt="">
+      
+                                                        @endif
+                                                       
                                                     </div>
                                                     <div class="rooms-details">
                                                         <div class="rooms-details-header fl-wrap">
-                                                            <span class="rooms-price">$81 <strong> / person</strong></span>
-                                                            <h3>Standard Family Room</h3>
-                                                            <h5>Max Guests: <span>3 persons</span></h5>
+                                                            <span class="rooms-price">{{$post->service_price}} <strong> / {{$post->service_name}}</strong></span>
+                                                            <h3>{{$post->service}}</h3>
+                                                           
                                                         </div>
-                                                        <p>Morbi varius, nulla sit amet rutrum elementum, est elit finibus tellus, ut tristique elit risus at metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                        <p>{{$post->service_details}}</p>
                                                         <div class="facilities-list fl-wrap">
-                                                            <ul>
-                                                                <li><i class="fal fa-wifi"></i><span>Free WiFi</span></li>
-                                                                <li><i class="fal fa-bath"></i><span>1 Bathroom</span></li>
-                                                                <li><i class="fal fa-snowflake"></i><span>Air conditioner</span></li>
-                                                                <li><i class="fal fa-tv"></i><span> Tv Inside</span></li>
-                                                                <li><i class="fas fa-concierge-bell"></i><span>Breakfast</span></li>
-                                                            </ul>
-                                                            <a href="rooms/room1.html" class="btn color-bg ajax-link">Details<i class="fas fa-caret-right"></i></a>
+                                                           
+                                                            
+                                                           
                                                         </div>
                                                     </div>
                                                 </div>
@@ -351,152 +423,38 @@
                                                 <!--  rooms-item -->
                                                 <div class="rooms-item fl-wrap">
                                                     <div class="rooms-media">
-                                                        <img src="images/gal/9.jpg" alt="">
-                                                        <div class="dynamic-gal more-photos-button" data-dynamicPath="[{'src': 'images/gal/slider/4.jpg'}, {'src': 'images/gal/slider/5.jpg'}, {'src': 'images/gal/slider/2.jpg'} ]">View Gallery <span>3 photos</span> <i class="far fa-long-arrow-right"></i></div>
-                                                    </div>
+                                                      
+                                                        @if('$post->img_6')
+
+                                                        
+                                                        <img src="{{asset('/')}}storage/{{$post->img_6}}" alt=""  >
+                                                        @else
+                                                        <img src="{{asset('/')}}images/gal/9.jpg" alt="">
+      
+                                                        @endif
+                                                               </div>
                                                     <div class="rooms-details">
                                                         <div class="rooms-details-header fl-wrap">
-                                                            <span class="rooms-price">$122 <strong> / person</strong></span>
-                                                            <h3>Superior Double Room</h3>
-                                                            <h5>Max Guests: <span>4 persons</span></h5>
+                                                            <span class="rooms-price">{{$post->service_price}} <strong> / {{$post->service_name}}</strong></span>
+                                                            <h3>{{$post->service2}}</h3>
+                                                           
                                                         </div>
-                                                        <p>Morbi varius, nulla sit amet rutrum elementum, est elit finibus tellus, ut tristique elit risus at metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                        <p>{{$post->service_details2}}</p>
                                                         <div class="facilities-list fl-wrap">
-                                                            <ul>
-                                                                <li><i class="fal fa-wifi"></i><span>Free WiFi</span></li>
-                                                                <li><i class="fal fa-parking"></i><span>Parking</span></li>
-                                                                <li><i class="fal fa-smoking-ban"></i><span>Non-smoking Rooms</span></li>
-                                                                <li><i class="fal fa-utensils"></i><span> Restaurant</span></li>
-                                                            </ul>
-                                                            <a href="rooms/room2.html" class="btn color-bg ajax-link">Details<i class="fas fa-caret-right"></i></a>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!--  rooms-item end -->   
                                                 <!--  rooms-item -->
-                                                <div class="rooms-item fl-wrap">
-                                                    <div class="rooms-media">
-                                                        <img src="images/gal/4.jpg" alt="">
-                                                        <div class="dynamic-gal more-photos-button" data-dynamicPath="[{'src': 'images/gal/slider/7.jpg'},{'src': 'images/gal/slider/4.jpg'}, {'src': 'images/gal/slider/5.jpg'},{'src': 'images/gal/slider/6.jpg'}]"> View Gallery <span>4 photos</span> <i class="far fa-long-arrow-right"></i> </div>
-                                                    </div>
-                                                    <div class="rooms-details">
-                                                        <div class="rooms-details-header fl-wrap">
-                                                            <span class="rooms-price">$310 <strong> / person</strong></span>
-                                                            <h3>Deluxe Single Room</h3>
-                                                            <h5>Max Guests: <span>2 persons</span></h5>
-                                                        </div>
-                                                        <p>Morbi varius, nulla sit amet rutrum elementum, est elit finibus tellus, ut tristique elit risus at metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                        <div class="facilities-list fl-wrap">
-                                                            <ul>
-                                                                <li><i class="fal fa-wifi"></i><span>Free WiFi</span></li>
-                                                                <li><i class="fal fa-parking"></i><span>Parking</span></li>
-                                                                <li><i class="fal fa-smoking-ban"></i><span>Non-smoking Rooms</span></li>
-                                                                <li><i class="fal fa-utensils"></i><span> Restaurant</span></li>
-                                                            </ul>
-                                                            <a href="rooms/room3.html" class="btn color-bg ajax-link">Details<i class="fas fa-caret-right"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                               
                                                 <!--  rooms-item end -->                                                      
                                             </div>
                                             <!--   rooms-container end -->
                                         </div>
                                         <!-- list-single-main-item end -->
                                         <!-- list-single-main-item -->   
-                                        <div class="list-single-main-item fl-wrap" id="sec5">
-                                            <div class="list-single-main-item-title fl-wrap">
-                                                <h3>Item Reviews -  <span> 2 </span></h3>
-                                            </div>
-                                            <!--reviews-score-wrap-->   
-                                            <div class="reviews-score-wrap fl-wrap">
-                                                <div class="review-score-total">
-                                                    <span>
-                                                    4.5
-                                                    <strong>Very Good</strong>
-                                                    </span>
-                                                    <a href="#" class="color2-bg">Add Review</a>
-                                                </div>
-                                                <div class="review-score-detail">
-                                                    <!-- review-score-detail-list-->
-                                                    <div class="review-score-detail-list">
-                                                        <!-- rate item-->
-                                                        <div class="rate-item fl-wrap">
-                                                            <div class="rate-item-title fl-wrap"><span>Cleanliness</span></div>
-                                                            <div class="rate-item-bg" data-percent="100%">
-                                                                <div class="rate-item-line color-bg"></div>
-                                                            </div>
-                                                            <div class="rate-item-percent">5.0</div>
-                                                        </div>
-                                                        <!-- rate item end-->
-                                                        <!-- rate item-->
-                                                        <div class="rate-item fl-wrap">
-                                                            <div class="rate-item-title fl-wrap"><span>Comfort</span></div>
-                                                            <div class="rate-item-bg" data-percent="90%">
-                                                                <div class="rate-item-line color-bg"></div>
-                                                            </div>
-                                                            <div class="rate-item-percent">5.0</div>
-                                                        </div>
-                                                        <!-- rate item end-->                                                        
-                                                        <!-- rate item-->
-                                                        <div class="rate-item fl-wrap">
-                                                            <div class="rate-item-title fl-wrap"><span>Staf</span></div>
-                                                            <div class="rate-item-bg" data-percent="80%">
-                                                                <div class="rate-item-line color-bg"></div>
-                                                            </div>
-                                                            <div class="rate-item-percent">4.0</div>
-                                                        </div>
-                                                        <!-- rate item end-->  
-                                                        <!-- rate item-->
-                                                        <div class="rate-item fl-wrap">
-                                                            <div class="rate-item-title fl-wrap"><span>Facilities</span></div>
-                                                            <div class="rate-item-bg" data-percent="90%">
-                                                                <div class="rate-item-line color-bg"></div>
-                                                            </div>
-                                                            <div class="rate-item-percent">4.5</div>
-                                                        </div>
-                                                        <!-- rate item end--> 
-                                                    </div>
-                                                    <!-- review-score-detail-list end-->
-                                                </div>
-                                            </div>
-                                            <!-- reviews-score-wrap end -->   
-                                            <div class="reviews-comments-wrap">
-                                                <!-- reviews-comments-item -->  
-                                                <div class="reviews-comments-item">
-                                                    <div class="review-comments-avatar">
-                                                        <img src="images/avatar/2.jpg" alt=""> 
-                                                    </div>
-                                                    <div class="reviews-comments-item-text">
-                                                        <h4><a href="#">Liza Rose</a></h4>
-                                                        <div class="review-score-user">
-                                                            <span>4.4</span>
-                                                            <strong>Good</strong>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        <p>" Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. "</p>
-                                                        <div class="reviews-comments-item-date"><span><i class="far fa-calendar-check"></i>12 April 2018</span><a href="#"><i class="fal fa-reply"></i> Reply</a></div>
-                                                    </div>
-                                                </div>
-                                                <!--reviews-comments-item end--> 
-                                                <!-- reviews-comments-item -->  
-                                                <div class="reviews-comments-item">
-                                                    <div class="review-comments-avatar">
-                                                        <img src="images/avatar/5.jpg" alt=""> 
-                                                    </div>
-                                                    <div class="reviews-comments-item-text">
-                                                        <h4><a href="#">Adam Koncy</a></h4>
-                                                        <div class="review-score-user">
-                                                            <span>4.7</span>
-                                                            <strong>Very Good</strong>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        <p>" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere convallis purus non cursus. Cras metus neque, gravida sodales massa ut. "</p>
-                                                        <div class="reviews-comments-item-date"><span><i class="far fa-calendar-check"></i>03 December 2017</span><a href="#"><i class="fal fa-reply"></i> Reply</a></div>
-                                                    </div>
-                                                </div>
-                                                <!--reviews-comments-item end-->                                                                  
-                                            </div>
-                                        </div>
+                                      
                                         <!-- list-single-main-item end -->   
                                         <!-- list-single-main-item -->   
                                         <div class="list-single-main-item fl-wrap" id="sec6">
@@ -506,62 +464,7 @@
                                             <!-- Add Review Box -->
                                             <div id="add-review" class="add-review-box">
                                                 <!-- Review Comment -->
-                                                <form id="add-comment" class="add-comment  custom-form" name="rangeCalc" >
-                                                    <fieldset>
-                                                        <div class="review-score-form fl-wrap">
-                                                            <div class="review-range-container">
-                                                                <!-- review-range-item-->
-                                                                <div class="review-range-item">
-                                                                    <div class="range-slider-title">Cleanliness</div>
-                                                                    <div class="range-slider-wrap ">
-                                                                        <input type="text" class="rate-range" data-min="0" data-max="5"  name="rgcl"  data-step="1" value="4">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- review-range-item end --> 
-                                                                <!-- review-range-item-->
-                                                                <div class="review-range-item">
-                                                                    <div class="range-slider-title">Comfort</div>
-                                                                    <div class="range-slider-wrap ">
-                                                                        <input type="text" class="rate-range" data-min="0" data-max="5"  name="rgcl"  data-step="1"  value="1">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- review-range-item end --> 
-                                                                <!-- review-range-item-->
-                                                                <div class="review-range-item">
-                                                                    <div class="range-slider-title">Staf</div>
-                                                                    <div class="range-slider-wrap ">
-                                                                        <input type="text" class="rate-range" data-min="0" data-max="5"  name="rgcl"  data-step="1" value="5" >
-                                                                    </div>
-                                                                </div>
-                                                                <!-- review-range-item end --> 
-                                                                <!-- review-range-item-->
-                                                                <div class="review-range-item">
-                                                                    <div class="range-slider-title">Facilities</div>
-                                                                    <div class="range-slider-wrap">
-                                                                        <input type="text" class="rate-range" data-min="0" data-max="5"  name="rgcl"  data-step="1" value="3">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- review-range-item end -->                                     
-                                                            </div>
-                                                            <div class="review-total">
-                                                                <span><input type="text" name="rg_total"  data-form="AVG({rgcl})" value="0"></span>    
-                                                                <strong>Your Score</strong>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <label><i class="fal fa-user"></i></label>
-                                                                <input type="text" placeholder="Your Name *" value=""/>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label><i class="fal fa-envelope"></i>  </label>
-                                                                <input type="text" placeholder="Email Address*" value=""/>
-                                                            </div>
-                                                        </div>
-                                                        <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>
-                                                    </fieldset>
-                                                    <button class="btn  big-btn flat-btn float-btn color2-bg" style="margin-top:30px">Submit Review <i class="fal fa-paper-plane"></i></button>
-                                                </form>
+                                               @livewire('front-review',['b_id' =>$post->id])
                                             </div>
                                             <!-- Add Review Box / End -->
                                         </div>
@@ -578,54 +481,9 @@
                                             <div class="box-widget">
                                                 <div class="box-widget-content">
                                                     <div class="box-widget-item-header">
-                                                        <h3> Book This Hotel</h3>
+                                                        <h3> Booking /Enquiry</h3>
                                                     </div>
-                                                    <form name="bookFormCalc"   class="book-form custom-form">
-                                                        <fieldset>
-                                                            <div class="cal-item">
-                                                                <div class="listsearch-input-item">
-                                                                    <label>Room Type</label>
-                                                                    <select data-placeholder="Room Type" name="repopt"   class="chosen-select no-search-select" >
-                                                                        <option value="0" selected>Select Room</option>
-                                                                        <option value="81">Standard Family Room - 81$</option>
-                                                                        <option value="122">Superior Double Room - 122$</option>
-                                                                        <option value="310">Deluxe Single Room - 310$</option>
-                                                                    </select>
-                                                                    <!--data-formula -->
-                                                                    <input type="text" name="item_total" class="hid-input"  value=""  data-form="{repopt}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="cal-item">
-                                                                <div class="bookdate-container  fl-wrap">
-                                                                    <label><i class="fal fa-calendar-check"></i> When </label>
-                                                                    <input type="text"    placeholder="Date In-Out" name="bookdates"   value=""/>
-                                                                    <div class="bookdate-container-dayscounter"><i class="far fa-question-circle"></i><span>Days : <strong>0</strong></span></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="cal-item">
-                                                                <div class="quantity-item fl-wrap">
-                                                                    <label> Adults</label>
-                                                                    <div class="quantity">
-                                                                        <input type="number" name="qty3" min="0" max="3" step="1" value="0">
-                                                                        <input type="text" name="item_total" class="hid-input" value="0" data-form="{qty3} * {repopt} - {repopt}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="quantity-item fl-wrap fcit">
-                                                                    <label> Children</label>
-                                                                    <div class="quantity">
-                                                                        <input type="number"  name="qty2" min="0" max="3" step="1" value="0">
-                                                                        <select name="sale" class="hid-input">
-                                                                            <option value=".7"  selected>sale</option>
-                                                                        </select>
-                                                                        <input type="text" name="item_total" class="hid-input" value="0" data-form="({repopt} * {sale})*{qty2}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </fieldset>
-                                                        <input type="number"  id="totaldays" name="qty5" class="hid-input">
-                                                        <div class="total-coast fl-wrap"><strong>Total Cost</strong> <span>$ <input type="text" name="grand_total" value="" data-form="SUM({item_total}) * {qty5}"></span></div>
-                                                        <button class="btnaplly color2-bg">Book Now<i class="fal fa-paper-plane"></i></button>
-                                                    </form>
+                                                   @livewire('front-booking',['b_id' =>$post->id])
                                                 </div>
                                             </div>
                                         </div>
@@ -635,24 +493,24 @@
                                             <div class="box-widget counter-widget" data-countDate="09/12/2019">
                                                 <div class="banner-wdget fl-wrap">
                                                     <div class="overlay"></div>
-                                                    <div class="bg"  data-bg="images/bg/10.jpg"></div>
+                                                    <div class="bg"  data-bg="{{asset('/')}}images/bg/10.jpg"></div>
                                                     <div class="banner-wdget-content fl-wrap">
                                                         <h4>Get a discount <span>20%</span> when ordering a room from three days.</h4>
                                                         <div class="countdown fl-wrap">
                                                             <div class="countdown-item">
-                                                                <span class="days rot">00</span>
+                                                                <span class="days rot">10</span>
                                                                 <p>days</p>
                                                             </div>
                                                             <div class="countdown-item">
-                                                                <span class="hours rot">00</span>
+                                                                <span class="hours rot">01</span>
                                                                 <p>hours </p>
                                                             </div>
                                                             <div class="countdown-item">
-                                                                <span class="minutes rot">00</span>
+                                                                <span class="minutes rot">05</span>
                                                                 <p>minutes </p>
                                                             </div>
                                                             <div class="countdown-item">
-                                                                <span class="seconds rot">00</span>
+                                                                <span class="seconds rot">09</span>
                                                                 <p>seconds</p>
                                                             </div>
                                                         </div>
@@ -661,7 +519,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--box-widget-item end -->                                       
+                                        <!--box-widget-item end -->                                     
                                         <!--box-widget-item -->
                                         <div class="box-widget-item fl-wrap">
                                             <div class="box-widget">
@@ -671,18 +529,19 @@
                                                     </div>
                                                     <div class="box-widget-list">
                                                         <ul>
-                                                            <li><span><i class="fal fa-map-marker"></i> Adress :</span> <a href="#">USA 27TH Brooklyn NY</a></li>
-                                                            <li><span><i class="fal fa-phone"></i> Phone :</span> <a href="#">+7(123)987654</a></li>
-                                                            <li><span><i class="fal fa-envelope"></i> Mail :</span> <a href="#">AlisaNoory@domain.com</a></li>
-                                                            <li><span><i class="fal fa-browser"></i> Website :</span> <a href="#">themeforest.net</a></li>
+                                                            <li><span><i class="fal fa-map-marker"></i> Adress :</span> <a href="#"> {{ucfirst($post->address)}} ,{{$post->City->name}},{{$post->State->name}},{{$post->Country->country_name}}</a></li>
+                                                            <li><span><i class="fal fa-phone"></i> Phone :</span> <a href="#"> {{$post->whatsapp}}  </a></li>
+                                                            <li><span><i class="fal fa-envelope"></i> Mail :</span> <a href="#"> {{$post->user->email}}  </a></li>
+                                                            <li><span><i class="fal fa-browser"></i> Website :</span> <a href="#"> {{$post->website}}   </a></li>
                                                         </ul>
                                                     </div>
                                                     <div class="list-widget-social">
                                                         <ul>
-                                                            <li><a href="#" target="_blank" ><i class="fab fa-facebook-f"></i></a></li>
-                                                            <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                                                            <li><a href="#" target="_blank" ><i class="fab fa-vk"></i></a></li>
-                                                            <li><a href="#" target="_blank" ><i class="fab fa-instagram"></i></a></li>
+                                                            <li><a href=" {{$post->fb}} " target="_blank" ><i class="fab fa-facebook-f"></i></a></li>
+                                                            <li><a href=" {{$post->tw}} " target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                                            <li><a href="{{$post->youtube}}  " target="_blank" ><i class="fab fa-youtube"></i></a></li>
+
+                                                            <li><a href="{{$post->ins}}  " target="_blank" ><i class="fab fa-instagram"></i></a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -717,11 +576,11 @@
                                             <div class="box-widget widget-posts">
                                                 <div class="box-widget-content">
                                                     <div class="box-widget-item-header">
-                                                        <h3>Recommended Attractions</h3>
+                                                        <h3>Recommended Listings</h3>
                                                     </div>
                                                     <!--box-image-widget-->
                                                     <div class="box-image-widget">
-                                                        <div class="box-image-widget-media"><img src="images/all/4.jpg" alt="">
+                                                        <div class="box-image-widget-media"><img src=" {{asset('images/all/4.jpg')}} " alt="">
                                                             <a href="#" class="color2-bg" target="_blank">Details</a>
                                                         </div>
                                                         <div class="box-image-widget-details">
@@ -730,27 +589,7 @@
                                                         </div>
                                                     </div>
                                                     <!--box-image-widget end -->
-                                                    <!--box-image-widget-->
-                                                    <div class="box-image-widget">
-                                                        <div class="box-image-widget-media"><img src="images/all/5.jpg" alt="">
-                                                            <a href="#" class="color2-bg" target="_blank">Details</a>
-                                                        </div>
-                                                        <div class="box-image-widget-details">
-                                                            <h4>Broadway<span>1.7 km</span></h4>
-                                                            <p>Tap your feet to catchy ditties, hold back tears or bust your gut laughing at a world renowned Broadway performance.</p>
-                                                        </div>
-                                                    </div>
-                                                    <!--box-image-widget end -->                                                   	
-                                                    <!--box-image-widget-->
-                                                    <div class="box-image-widget">
-                                                        <div class="box-image-widget-media"><img src="images/all/6.jpg" alt="">
-                                                            <a href="#" class="color2-bg" target="_blank">Details</a>
-                                                        </div>
-                                                        <div class="box-image-widget-details">
-                                                            <h4>Grand Central Station<span>0.7 km</span></h4>
-                                                            <p>With its elegantly designed main concourse, this rail station is much more than just a massive transport hub.</p>
-                                                        </div>
-                                                    </div>
+                                                 
                                                     <!--box-image-widget end -->                                                         
                                                 </div>
                                             </div>
@@ -766,12 +605,19 @@
                                                     <div class="box-widget-author fl-wrap">
                                                         <div class="box-widget-author-title fl-wrap">
                                                             <div class="box-widget-author-title-img">
-                                                                <img src="images/avatar/4.jpg" alt=""> 
+
+                                                               @if ($post->user->profile_image)
+                                                               <img src=" {{asset('/')}}storage/{{$post->img_5}}" alt=""> 
+                                                               @else
+                                                               <img src="{{asset('/')}}images/avatar/4.jpg" alt=""> 
+                                                               @endif 
+                                                               
+                                                                
                                                             </div>
-                                                            <a href="user-single.html">Jessie Manrty</a>
-                                                            <span>4 Places Hosted</span>
+                                                            <a href="user-single.html"> {{$post->user->name}}   </a>
+                                                         
                                                         </div>
-                                                        <a href="author-single.html" class="btn flat-btn color-bg   float-btn image-popup">View Profile<i class="fal fa-user-alt"></i></a>
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -787,7 +633,7 @@
                                                     <div class="widget-posts fl-wrap">
                                                         <ul>
                                                             <li class="clearfix">
-                                                                <a href="#"  class="widget-posts-img"><img src="images/gal/3.jpg" class="respimg" alt=""></a>
+                                                                <a href="#"  class="widget-posts-img"><img src="{{asset('/')}}images/gal/3.jpg" class="respimg" alt=""></a>
                                                                 <div class="widget-posts-descr">
                                                                     <a href="#" title="">Park Central</a>
                                                                     <div class="listing-rating card-popup-rainingvis" data-starrating2="5"></div>
@@ -832,5 +678,5 @@
                     <!--  section  end-->
                 </div>
                 <!-- content end-->
-                @endforeach
+             
                 @endsection

@@ -12,14 +12,14 @@ class dashboard extends Controller
  function dashboard()
 {
 
-return view('dashboard');
+return view('dashboard.dashboard');
 
 }
 
 function bussiness()
 {
 
-return view('bussiness');
+return view('dashboard.bussiness');
 
 }
 

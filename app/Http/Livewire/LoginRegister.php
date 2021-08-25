@@ -7,8 +7,8 @@ use App\Models\User;
 
 class LoginRegister extends Component
 {
-    public $users, $email, $password, $name;
-
+    public $users, $email, $password, $name,$contactno,$agree;
+public $default='1';
     public $registerForm = false;
 
 
@@ -28,6 +28,7 @@ class LoginRegister extends Component
         $this->email = '';
 
         $this->password = '';
+        $this->contactno = '';
 
     }
 
@@ -76,17 +77,22 @@ class LoginRegister extends Component
 
             'name' => 'required',
 
-            'email' => 'required|email',
+            'email' => 'required|unique:users',
+            'contactno' => 'required|unique:users',
 
             'password' => 'required',
+            'agree' => 'required',
 
         ]);
 
+        //dd($this->default);
 
         $this->password = $this->password; 
 
 
-        User::create(['name' => $this->name, 'email' => $this->email,'password' => $this->password]);
+        User::create(['name' => $this->name, 'contactno'=> $this->contactno,'agree'=> $this->agree,
+        'email' => $this->email,'payid' => $this->default,
+        'password' => $this->password]);
 
 
         session()->flash('message', 'Your register successfully Go to the login page.');

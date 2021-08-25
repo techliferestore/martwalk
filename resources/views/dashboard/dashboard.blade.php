@@ -8,7 +8,7 @@
 
 
 <!-- profile-edit-container-->
-@livewire('dashboard-profile')
+@livewire('dashboard-profile',['profile_id' =>(Auth::user()->id) ])
 
 </div>
                         

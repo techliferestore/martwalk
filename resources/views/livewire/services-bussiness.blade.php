@@ -62,7 +62,12 @@
 
                                  <input type="file" wire:model="img_5" name="i_gallery" class="upload">
 
+                                 <div class="col-md-6">
 
+                                    <img src="{{asset('/')}}storage/{{Auth::user()->bussiness->img_5}}" style="max-height: 200px; max-width: 100px;" alt="">
+                                    
+                                            
+                                    </div>
 
                                      </div>
 
@@ -165,7 +170,12 @@
 
 
                                  <input type="file" wire:model="img_6" name="sb_discount" class="upload">
+                                 <div class="col-md-6">
 
+                                    <img src="{{asset('/')}}storage/{{Auth::user()->bussiness->img_6}}" style="max-height: 200px; max-width: 100px;" alt="">
+                                    
+                                            
+                                    </div>
                                      </div>
 
 

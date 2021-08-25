@@ -10,7 +10,8 @@
                     <div class="dasboard-sidebar">
     <div class="dasboard-sidebar-content fl-wrap">
         <div class="dasboard-avatar">
-            <img src="{{url('/storage/profile_image/'.Auth::user()->profile_image)}}" alt="">                                 </div>
+          <img src="{{asset('/')}}storage/{{Auth::user()->profile_image}}" alt="">   
+                                        </div>
         <div  class="dasboard-sidebar-item fl-wrap">
             <h3>
 

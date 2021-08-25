@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,23 @@ class bussinesses extends Model
        
     ];
 
+    public function City()
+  {
+    return $this->hasOne('App\Models\cities','id','city_id');
+  }
 
+  public function State()
+  {
+    return $this->hasOne('App\Models\states','id','state_id');
+  }
+  public function Country()
+  {
+    return $this->hasOne('App\Models\countries','id','country_id');
+  } 
+  public function user()
+  {
+    return $this->hasOne('App\Models\User','id','user_id');
+  }
     
+  
 }

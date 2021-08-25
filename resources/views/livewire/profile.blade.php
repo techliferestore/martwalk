@@ -1,5 +1,5 @@
 
-<form  wire:submit.prevent="update({{Auth::user()->id}})" >
+<form  wire:submit.prevent="updateProfile()" enctype="multipart/form-data" >
 
 
 
@@ -54,11 +54,9 @@
          <div class="col-md-6">
 
              <label>Change Avatar</label>
-              @if($image)
-        <img src={{$image}} width="200" />
-        @endif
-        <img src="   {{url('/storage/profile_image/'.Auth::user()->profile_image)}}" width="200" />
-        
+             
+            <img src="{{asset('/')}}storage/{{Auth::user()->profile_image}}" alt="" width="200" />
+          
        
              </div>
 
@@ -67,24 +65,13 @@
              <div class="col-md-6"> 
        
    <br>
-        <input type="file" id="image" wire:change="$emit('fileChoosen')">
+        <input type="file"  wire:model="image">
+        @error('image')<span class="error">{{$message}}</span>@enderror
     </div>      
 
     </div>         
 
 
-<script>
-    window.livewire.on('fileChoosen', () => {
-        let inputField = document.getElementById('image')
-        let file = inputField.files[0]
-        let reader = new FileReader();
-        reader.onloadend = () => {
-            window.livewire.emit('fileUpload', reader.result)
-        }
-        reader.readAsDataURL(file);
-
-    })
-</script>
 
 <div class="col-md-12 text-center">
         <button type="submit" class="btn color2-bg  float-btn">Save Changes<i class="fal fa-save"></i></button>

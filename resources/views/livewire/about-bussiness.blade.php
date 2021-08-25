@@ -162,20 +162,10 @@
 
 <div class="col-md-6">
 
-    <div class="add-list-media-header" style="margin-bottom:20px">
-
-        <label >
+    
 
 
-
-            <span>Header Image </span>
-
-        </label>
-
-    </div>
-
-
-            <input type="file" wire:model="header_image"  name="bg_image" class="upload">
+            <input type="file" wire:model.lazy="header_image"  name="bg_image" class="upload">
 
             @error('header_image')<span class="error">{{$message}}</span>@enderror
 
@@ -185,8 +175,9 @@
 
 <div class="col-md-6">
 
-<span><img src="images/avatar/pr.jpg" style="max-height: 200px; max-width: 100px;" alt=""></span>
+<img src="{{asset('/')}}storage/{{Auth::user()->bussiness->header_image}}" style="max-height: 200px; max-width: 100px;" alt="">
 
+        
 </div>
 
 </div>
